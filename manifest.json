@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "122激光焊机操作工快速处置手册",
+  "short_name": "122焊机手册",
+  "description": "122激光焊机操作工故障处置、日常维护与安全事项手册",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f1f5f7",
+  "theme_color": "#0d527f",
+  "icons": [
+    { "src": "./assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

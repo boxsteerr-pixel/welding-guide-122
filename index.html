@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d527f">
+  <meta name="description" content="独立设备操作工快速处置手册">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/style.css">
+  <title>设备操作工快速处置手册</title>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到手册内容</a>
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero__status">
+        <span id="machine-state">读取设备配置…</span>
+        <span id="network-status" role="status">在线</span>
+      </div>
+      <p class="eyebrow">OPERATOR QUICK RESPONSE</p>
+      <h1><span id="machine-name">设备手册</span><small id="manual-title">操作工快速处置手册</small></h1>
+      <div class="hero__meta">
+        <span id="manual-version">版本 —</span>
+        <button id="install-button" class="install-button" type="button" hidden>安装手册</button>
+      </div>
+    </header>
+
+    <nav class="top-nav" aria-label="手册主导航">
+      <button type="button" data-section="home" class="active" aria-current="page">首页</button>
+      <button type="button" data-section="faults">故障处置</button>
+      <button type="button" data-section="maintenance">日常维护</button>
+      <button type="button" data-section="safety">安全事项</button>
+    </nav>
+
+    <main id="main-content">
+      <section id="home" class="section active" data-page="home" aria-labelledby="home-title">
+        <h2 id="home-title" class="visually-hidden">手册首页</h2>
+        <div id="notices" class="notice-list" aria-live="polite"></div>
+
+        <div class="home-actions">
+          <button class="action-card action-card--primary" type="button" data-go="faults">
+            <span class="action-card__icon" aria-hidden="true">!</span>
+            <span><strong>故障快速处置</strong><small>按现象搜索并查看处理步骤</small></span>
+            <b aria-hidden="true">›</b>
+          </button>
+          <div class="home-actions__pair">
+            <button class="action-card" type="button" data-go="maintenance">
+              <span class="action-card__icon" aria-hidden="true">◇</span>
+              <span><strong>日常维护</strong><small>点检、清洁与保养</small></span>
+            </button>
+            <button class="action-card action-card--safety" type="button" data-go="safety">
+              <span class="action-card__icon" aria-hidden="true">△</span>
+              <span><strong>安全事项</strong><small>停机条件与安全边界</small></span>
+            </button>
+          </div>
+        </div>
+
+        <section class="overview-card" aria-labelledby="overview-title">
+          <div class="section-heading">
+            <h2 id="overview-title">内容概览</h2>
+            <span>从数据文件自动更新</span>
+          </div>
+          <div class="count-grid">
+            <button type="button" data-go="faults"><b id="fault-count">0</b><span>故障处置</span></button>
+            <button type="button" data-go="maintenance"><b id="maintenance-count">0</b><span>维护项目</span></button>
+            <button type="button" data-go="safety"><b id="safety-count">0</b><span>安全事项</span></button>
+          </div>
+        </section>
+      </section>
+
+      <section id="faults" class="section" data-page="faults" aria-labelledby="faults-title">
+        <div class="section-heading section-heading--page"><div><p>FAULT RESPONSE</p><h2 id="faults-title">故障处置</h2></div></div>
+        <form id="search-form" class="search-form" role="search">
+          <label for="search-input">搜索故障现象、关键词或步骤</label>
+          <div><input id="search-input" type="search" inputmode="search" autocomplete="off" placeholder="例如：报警、气压、送丝"><button type="submit">搜索</button></div>
+        </form>
+        <p id="search-summary" class="search-summary" role="status"></p>
+        <div id="fault-list" class="entry-list"></div>
+      </section>
+
+      <section id="maintenance" class="section" data-page="maintenance" aria-labelledby="maintenance-title">
+        <div class="section-heading section-heading--page"><div><p>ROUTINE CARE</p><h2 id="maintenance-title">日常维护</h2></div></div>
+        <div id="maintenance-list" class="entry-list"></div>
+      </section>
+
+      <section id="safety" class="section" data-page="safety" aria-labelledby="safety-title">
+        <div class="section-heading section-heading--page"><div><p>SAFETY FIRST</p><h2 id="safety-title">安全事项</h2></div></div>
+        <div id="safety-list" class="entry-list"></div>
+      </section>
+    </main>
+
+    <footer><span id="footer-machine">设备手册</span> · 内容版本 <span id="footer-version">—</span></footer>
+  </div>
+
+  <nav class="bottom-nav" aria-label="手机端主导航">
+    <button type="button" data-section="home" class="active" aria-current="page"><span aria-hidden="true">⌂</span>首页</button>
+    <button type="button" data-section="faults"><span aria-hidden="true">!</span>故障</button>
+    <button type="button" data-section="maintenance"><span aria-hidden="true">◇</span>维护</button>
+    <button type="button" data-section="safety"><span aria-hidden="true">△</span>安全</button>
+  </nav>
+
+  <div id="image-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="图片大图查看" hidden>
+    <div class="image-modal__toolbar">
+      <button type="button" data-zoom="out" aria-label="缩小图片">−</button>
+      <button type="button" data-zoom="reset" aria-label="恢复图片大小">1:1</button>
+      <button type="button" data-zoom="in" aria-label="放大图片">＋</button>
+    </div>
+    <button type="button" class="image-modal__close" aria-label="关闭大图">×</button>
+    <img id="modal-image" alt="">
+    <p>双指缩放 · 拖动查看 · 点击关闭</p>
+  </div>
+
+  <template id="empty-template">
+    <div class="empty-state"><span aria-hidden="true">＋</span><h3>内容待录入</h3><p>在 <code>data/manual.json</code> 中增加项目后，这里会自动显示。</p></div>
+  </template>
+  <script src="./js/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "1.0",
+  "machine": {
+    "machineId": "122",
+    "machineName": "122激光焊机",
+    "manualTitle": "操作工快速处置手册",
+    "manualVersion": "0.1.0",
+    "contentStatus": "空白内容框架",
+    "lastUpdated": "2026-09-30"
+  },
+  "notices": [
+    {
+      "level": "warning",
+      "title": "内容尚未发布",
+      "body": "当前仅建立独立手册框架。正式故障处置、维护和安全内容须经现场审核后录入。"
+    }
+  ],
+  "faults": [],
+  "maintenance": [],
+  "safety": []
+}
