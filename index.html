@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0d527f">
+  <meta name="theme-color" content="#075fae">
   <meta name="description" content="独立设备操作工快速处置手册">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=8">
   <link rel="stylesheet" href="./css/home-link.css?v=5">
   <title>设备操作工快速处置手册</title>
 </head>
@@ -20,87 +20,86 @@
         <span id="machine-state">读取设备配置…</span>
         <span id="network-status" role="status">在线</span>
       </div>
-      <p class="eyebrow">OPERATOR QUICK RESPONSE</p>
+      <p class="eyebrow">现场快速处置</p>
       <h1><span id="machine-name">设备手册</span><small id="manual-title">操作工快速处置手册</small></h1>
+      <p class="hero-values">安全 · 稳定 · 高效 · 绿色运行</p>
+      <span class="brand">MADE BY FANGPING</span>
       <div class="hero__meta">
         <span id="manual-version">版本 —</span>
-        <button id="install-button" class="install-button" type="button" hidden>安装手册</button>
+        <button id="install-button" class="install-button" type="button">安装到桌面</button>
       </div>
+      <p id="install-hint" class="install-hint" role="status" hidden>请通过浏览器菜单选择“安装应用”或“添加到主屏幕”。</p>
     </header>
 
     <nav class="top-nav" aria-label="手册主导航">
-      <button type="button" data-section="home" class="active" aria-current="page">首页</button>
-      <button type="button" data-section="faults">故障处置</button>
-      <button type="button" data-section="maintenance">日常维护</button>
-      <button type="button" data-section="safety">安全事项</button>
+      <button type="button" data-section="home" class="active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></button>
+      <button type="button" data-section="maintenance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6 4-4 4 4-4 4-3-1-7 7-3-3 7-7z"/><path d="m5 14-3 3 4 4 3-3"/></svg><span>日常维护</span></button>
+      <button type="button" data-section="faults"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20L12 3z"/><path d="M12 9v5"/><path d="M12 17h.01"/></svg><span>异常处理</span></button>
+      <button type="button" data-section="safety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 4v6c0 5-9 9-9 9s-9-4-9-9V7z"/><path d="m8 12 3 3 5-6"/></svg><span>安全事项</span></button>
     </nav>
 
     <main id="main-content">
+        <form id="search-form" class="search-form search-panel" role="search">
+          <label class="visually-hidden" for="search-input">搜索故障现象、关键词或步骤</label>
+          <div><span class="search-wrap"><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg><input id="search-input" type="search" inputmode="search" autocomplete="off" placeholder="搜索异常、原因、处理方法"></span><button type="submit">搜索</button></div>
+          <p class="hotline"><b aria-hidden="true">热</b><span id="quick-keywords" class="chips"></span></p>
+        </form>
       <section id="home" class="section active" data-page="home" aria-labelledby="home-title">
         <h2 id="home-title" class="visually-hidden">手册首页</h2>
-        <div id="notices" class="notice-list" aria-live="polite"></div>
+
 
         <div class="home-actions">
           <button class="action-card action-card--primary" type="button" data-go="faults">
-            <span class="action-card__icon" aria-hidden="true">!</span>
-            <span><strong>故障快速处置</strong><small>按现象搜索并查看处理步骤</small></span>
+            <span class="action-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20L12 3z"/><path d="M12 9v5"/><path d="M12 17h.01"/></svg></span>
+            <span><strong>异常处理</strong><small>快速定位设备异常，获取处置方案</small></span>
             <b aria-hidden="true">›</b>
           </button>
           <div class="home-actions__pair">
             <button class="action-card" type="button" data-go="maintenance">
-              <span class="action-card__icon" aria-hidden="true">◇</span>
-              <span><strong>日常维护</strong><small>点检、清洁与保养</small></span>
+              <span class="action-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6 4-4 4 4-4 4-3-1-7 7-3-3 7-7z"/><path d="m5 14-3 3 4 4 3-3"/></svg></span>
+              <span><strong>日常维护</strong><small>按周期执行<br>保持设备稳定</small></span>
             </button>
             <button class="action-card action-card--safety" type="button" data-go="safety">
-              <span class="action-card__icon" aria-hidden="true">△</span>
-              <span><strong>安全事项</strong><small>停机条件与安全边界</small></span>
+              <span class="action-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 4v6c0 5-9 9-9 9s-9-4-9-9V7z"/><path d="m8 12 3 3 5-6"/></svg></span>
+              <span><strong>安全事项</strong><small>规程与注意<br>安全生产第一</small></span>
             </button>
           </div>
         </div>
 
-        <section class="overview-card" aria-labelledby="overview-title">
-          <div class="section-heading">
-            <h2 id="overview-title">内容概览</h2>
-            <span>从数据文件自动更新</span>
-          </div>
-          <div class="count-grid">
-            <button type="button" data-go="faults"><b id="fault-count">0</b><span>故障处置</span></button>
-            <button type="button" data-go="maintenance"><b id="maintenance-count">0</b><span>维护项目</span></button>
-            <button type="button" data-go="safety"><b id="safety-count">0</b><span>安全事项</span></button>
-          </div>
-        </section>
+        <div class="section-heading common-heading"><h2>常用处置</h2><button type="button" data-go="faults">查看全部 ›</button></div>
+        <div id="home-faults" class="home-fault-list"></div>
+        <div id="notices" class="notice-list" aria-live="polite"></div>
+        <div hidden><b id="fault-count">0</b><b id="maintenance-count">0</b><b id="safety-count">0</b></div>
       </section>
 
       <section id="faults" class="section" data-page="faults" aria-labelledby="faults-title">
-        <div class="section-heading section-heading--page"><div><p>FAULT RESPONSE</p><h2 id="faults-title">故障处置</h2></div></div>
-        <form id="search-form" class="search-form" role="search">
-          <label for="search-input">搜索故障现象、关键词或步骤</label>
-          <div><input id="search-input" type="search" inputmode="search" autocomplete="off" placeholder="例如：报警、气压、送丝"><button type="submit">搜索</button></div>
-        </form>
+        <div class="section-heading section-heading--page"><div><h2 id="faults-title">异常处理</h2></div></div>
+
+        <div class="collection-toolbar"><button type="button" data-expand="true">展开全部</button><button type="button" data-expand="false">收起全部</button></div>
         <p id="search-summary" class="search-summary" role="status"></p>
         <div id="fault-list" class="entry-list"></div>
       </section>
 
       <section id="maintenance" class="section" data-page="maintenance" aria-labelledby="maintenance-title">
-        <div class="section-heading section-heading--page"><div><p>ROUTINE CARE</p><h2 id="maintenance-title">日常维护</h2></div></div>
+        <div class="section-heading section-heading--page"><div><h2 id="maintenance-title">日常维护</h2></div></div>
         <div id="maintenance-list" class="entry-list"></div>
       </section>
 
       <section id="safety" class="section" data-page="safety" aria-labelledby="safety-title">
-        <div class="section-heading section-heading--page"><div><p>SAFETY FIRST</p><h2 id="safety-title">安全事项</h2></div></div>
+        <div class="section-heading section-heading--page"><div><h2 id="safety-title">安全事项</h2></div></div>
         <div id="safety-list" class="entry-list"></div>
       </section>
     </main>
 
-    <footer><span id="footer-machine">设备手册</span> · 内容版本 <span id="footer-version">—</span></footer>
+    <footer><span id="footer-machine">设备手册</span><br>内容版本 <span id="footer-version">—</span><br>适用人员：焊机操作工</footer>
   </div>
 
   <nav class="bottom-nav" aria-label="手机端主导航">
-    <button type="button" data-section="home" class="active" aria-current="page"><span aria-hidden="true">⌂</span>首页</button>
-    <button type="button" data-section="faults"><span aria-hidden="true">!</span>故障</button>
-    <button type="button" data-section="maintenance"><span aria-hidden="true">◇</span>维护</button>
-    <button type="button" data-section="safety"><span aria-hidden="true">△</span>安全</button>
-  </nav>
+      <button type="button" data-section="home" class="active" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h5v-7h4v7h5V9"/></svg><span>首页</span></button>
+      <button type="button" data-section="maintenance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6 4-4 4 4-4 4-3-1-7 7-3-3 7-7z"/><path d="m5 14-3 3 4 4 3-3"/></svg><span>日常维护</span></button>
+      <button type="button" data-section="faults"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20L12 3z"/><path d="M12 9v5"/><path d="M12 17h.01"/></svg><span>异常处理</span></button>
+      <button type="button" data-section="safety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 4v6c0 5-9 9-9 9s-9-4-9-9V7z"/><path d="m8 12 3 3 5-6"/></svg><span>安全事项</span></button>
+    </nav>
 
   <div id="image-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="图片大图查看" hidden>
     <div class="image-modal__toolbar">
@@ -117,6 +116,6 @@
     <div class="empty-state"><span aria-hidden="true">＋</span><h3>内容待录入</h3><p>在 <code>data/manual.json</code> 中增加项目后，这里会自动显示。</p></div>
   </template>
   <script src="./js/update-state.js?v=2" defer></script>
-  <script src="./js/app.js?v=7" defer></script>
+  <script src="./js/app.js?v=8" defer></script>
 </body>
 </html>

@@ -33,7 +33,8 @@
     });
     if (!options || !options.fromHistory) history.pushState({ section: name }, "", `#section=${name}`);
     window.scrollTo({ top: 0, behavior: options && options.initial ? "instant" : "smooth" });
-    if (name === "faults") document.querySelector("#search-input").focus({ preventScroll: true });
+    const searchPanel = document.querySelector(".search-panel");
+    if (searchPanel) searchPanel.hidden = name !== "home" && name !== "faults";
   }
 
   function appendList(parent, title, values, ordered) {
@@ -59,10 +60,11 @@
     risk.append(text(riskLabels[item.risk] || riskLabels.medium));
     const title = document.createElement("span");
     title.append(text(item.title || "未命名项目"));
-    summary.append(risk, title);
+    summary.append(title);
 
     const body = document.createElement("div");
     body.className = "entry-body";
+    body.append(risk);
     if (item.summary) {
       const paragraph = document.createElement("p");
       paragraph.append(text(item.summary));
@@ -114,7 +116,13 @@
     container.replaceChildren();
     const normalizedQuery = (query || "").trim().toLocaleLowerCase("zh-CN");
     const filtered = normalizedQuery ? items.filter(function (item) { return searchableText(item).includes(normalizedQuery); }) : items;
-    if (!filtered.length) container.append(emptyState());
+    if (!filtered.length) {
+      container.append(emptyState());
+      if (normalizedQuery) {
+        container.querySelector("h3").textContent = "没有找到匹配异常";
+        container.querySelector("p").textContent = "请尝试其他关键词，或清空搜索查看全部项目。";
+      }
+    }
     else filtered.forEach(function (item) { container.append(buildEntry(item)); });
     return filtered.length;
   }
@@ -146,6 +154,27 @@
       notices.append(box);
     });
     renderCollection("#fault-list", manual.faults, state.query);
+    const homeFaults = document.querySelector("#home-faults");
+    homeFaults.replaceChildren();
+    if (!manual.faults.length) homeFaults.append(emptyState());
+    manual.faults.slice(0, 4).forEach(function (item, index) {
+      const row = document.createElement("button");
+      row.type = "button"; row.className = "fault-row"; row.dataset.entryIndex = index;
+      const number = document.createElement("b"); number.append(text(index + 1));
+      const copy = document.createElement("span");
+      const title = document.createElement("strong"); title.append(text(item.title));
+      const summary = document.createElement("small"); summary.append(text(item.summary || "查看处置步骤"));
+      copy.append(title, summary);
+      const arrow = document.createElement("em"); arrow.setAttribute("aria-hidden", "true"); arrow.append(text("›"));
+      row.append(number, copy, arrow); homeFaults.append(row);
+    });
+    const keywords = document.querySelector("#quick-keywords");
+    keywords.replaceChildren();
+    const quickKeywords = Array.isArray(manual.quickKeywords) ? manual.quickKeywords : manual.faults.flatMap(function (item) { return Array.isArray(item.keywords) ? item.keywords : []; });
+    Array.from(new Set(quickKeywords.filter(function (value) { return typeof value === "string" && value.trim(); }))).slice(0, 16).forEach(function (word) {
+      const button = document.createElement("button"); button.type = "button"; button.dataset.keyword = word; button.append(text(word)); keywords.append(button);
+    });
+    if (!keywords.childNodes.length) keywords.append(text("内容录入后显示快捷关键词"));
     renderCollection("#maintenance-list", manual.maintenance);
     renderCollection("#safety-list", manual.safety);
   }
@@ -178,6 +207,22 @@
   }
 
   document.addEventListener("click", function (event) {
+    const keyword = event.target.closest("[data-keyword]");
+    if (keyword) {
+      document.querySelector("#search-input").value = keyword.dataset.keyword;
+      document.querySelector("#search-form").requestSubmit();
+    }
+    const entry = event.target.closest("[data-entry-index]");
+    if (entry && state.manual) {
+      state.query = ""; document.querySelector("#search-input").value = "";
+      setText("#search-summary", "");
+      renderCollection("#fault-list", state.manual.faults);
+      showSection("faults");
+      const details = document.querySelectorAll("#fault-list details")[Number(entry.dataset.entryIndex)];
+      if (details) { details.open = true; details.scrollIntoView({ behavior:"smooth", block:"start" }); }
+    }
+    const expansion = event.target.closest("[data-expand]");
+    if (expansion) document.querySelectorAll("#fault-list details").forEach(function (entry) { entry.open = expansion.dataset.expand === "true"; });
     const navigation = event.target.closest("[data-section], [data-go]");
     if (navigation) showSection(navigation.dataset.section || navigation.dataset.go);
   });
@@ -186,6 +231,7 @@
     event.preventDefault();
     if (!state.manual) return;
     state.query = document.querySelector("#search-input").value;
+    showSection("faults");
     const count = renderCollection("#fault-list", state.manual.faults, state.query);
     setText("#search-summary", state.query.trim() ? `找到 ${count} 项结果` : "");
   });
@@ -288,7 +334,7 @@
     installButton.hidden = false;
   });
   installButton.addEventListener("click", async function () {
-    if (!state.deferredInstallPrompt) return;
+    if (!state.deferredInstallPrompt) { document.querySelector("#install-hint").hidden = false; return; }
     state.deferredInstallPrompt.prompt();
     await state.deferredInstallPrompt.userChoice;
     state.deferredInstallPrompt = null;
