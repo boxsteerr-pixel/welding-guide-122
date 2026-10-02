@@ -19,7 +19,7 @@ assert.deepEqual(manual.maintenance, []);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-122-v8"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-122-v9"/);
 assert.match(sw, /const CACHE_PREFIX = "welding-guide-122-"/);
 assert.match(sw, /\.\/data\/manual\.json/);
 assert.match(app, /fetch\("\.\/data\/manual\.json"/);

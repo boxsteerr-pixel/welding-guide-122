@@ -1,0 +1,10 @@
+/* Compact phone header; avoid adding the full safe area twice in embedded browsers. */
+@media (max-width:719px) {
+  .hero { min-height:0; padding-top:calc(10px + min(env(safe-area-inset-top, 0px), 12px)); padding-bottom:26px; }
+  .hero__status { margin-bottom:18px; }
+  .hero .home-return { top:min(env(safe-area-inset-top, 0px), 12px); }
+}
+@media (max-width:719px) and (display-mode:standalone) {
+  .hero { padding-top:calc(10px + env(safe-area-inset-top, 0px)); }
+  .hero .home-return { top:env(safe-area-inset-top, 0px); }
+}
