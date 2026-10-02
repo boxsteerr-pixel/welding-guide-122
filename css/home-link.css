@@ -1,0 +1,9 @@
+/* Local copy: no cross-project resource dependency. */
+.home-return { position: absolute; top: env(safe-area-inset-top, 0px); left: env(safe-area-inset-left, 0px); z-index: 3; display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; margin: 0; padding: 0; color: #fff; background: none; border: 0; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.home-return svg { width: 20px; height: 20px; flex-shrink: 0; color: #bcecff; }
+.home-return:hover svg { color: #fff; }
+.home-return:focus-visible { outline: 3px solid #71d6ff; outline-offset: 3px; }
+.hero__status { padding-left: 28px; }
+.topic-header { position: relative; padding-top: calc(44px + env(safe-area-inset-top)); }
+body[data-topic="history"] .home-return svg { color: #ffb52b; }
+body[data-topic="safety"] .home-return svg { color: #24ef70; }

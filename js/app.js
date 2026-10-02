@@ -153,6 +153,8 @@
     });
     if (!manual.machine || !manual.machine.machineId) throw new Error("手册数据缺少设备配置");
     renderManual(manual);
+    // Confirm only the version actually loaded and fully rendered, never a clicked link.
+    if (window.WeldingUpdates) window.WeldingUpdates.markViewed(manual.machine);
   }
 
   function showLoadError(error) {
