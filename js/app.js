@@ -305,6 +305,12 @@
   }
 
   if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.addEventListener("hashchange", function () {
+    const name = location.hash.replace(/^#(?:section=)?/, "");
+    if (!sectionNames.includes(name)) return;
+    history.replaceState({ section: name }, "", `#section=${name}`);
+    showSection(name, { fromHistory: true, initial: true });
+  });
   const initialSection = sectionFromHash();
   history.replaceState({ section: initialSection }, "", `#section=${initialSection}`);
   showSection(initialSection, { fromHistory: true, initial: true });
