@@ -14,6 +14,12 @@
     if (node) node.textContent = value;
   }
 
+  // Route hashes must not match content element IDs: native fragment scrolling hides the header.
+  function sectionFromHash() {
+    const name = location.hash.replace(/^#(?:section=)?/, "");
+    return sectionNames.includes(name) ? name : "home";
+  }
+
   function showSection(name, options) {
     if (!sectionNames.includes(name)) name = "home";
     state.section = name;
@@ -25,8 +31,8 @@
       button.classList.toggle("active", active);
       if (active) button.setAttribute("aria-current", "page"); else button.removeAttribute("aria-current");
     });
-    if (!options || !options.fromHistory) history.pushState({ section: name }, "", `#${name}`);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!options || !options.fromHistory) history.pushState({ section: name }, "", `#section=${name}`);
+    window.scrollTo({ top: 0, behavior: options && options.initial ? "instant" : "smooth" });
     if (name === "faults") document.querySelector("#search-input").focus({ preventScroll: true });
   }
 
@@ -194,7 +200,7 @@
 
   window.addEventListener("popstate", function (event) {
     if (!document.querySelector("#image-modal").hidden) return closeImage(false);
-    showSection((event.state && event.state.section) || location.hash.slice(1) || "home", { fromHistory: true });
+    showSection((event.state && event.state.section) || sectionFromHash(), { fromHistory: true });
   });
 
   const modal = document.querySelector("#image-modal");
@@ -298,8 +304,12 @@
     });
   }
 
-  const initialSection = sectionNames.includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
-  history.replaceState({ section: initialSection }, "", `#${initialSection}`);
-  showSection(initialSection, { fromHistory: true });
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  const initialSection = sectionFromHash();
+  history.replaceState({ section: initialSection }, "", `#section=${initialSection}`);
+  showSection(initialSection, { fromHistory: true, initial: true });
+  window.addEventListener("pageshow", function (event) {
+    if (!event.persisted) window.scrollTo({ top: 0, behavior: "instant" });
+  });
   loadManual().catch(showLoadError);
 })();
