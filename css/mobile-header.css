@@ -1,4 +1,8 @@
 /* Compact phone header; avoid adding the full safe area twice in embedded browsers. */
+.hero__status { gap:10px; align-items:flex-start; }
+.hero__status-right { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+#machine-state { min-width:0; overflow-wrap:anywhere; }
+#currentTime { color:#fff; white-space:nowrap; font-variant-numeric:tabular-nums; }
 @media (max-width:719px) {
   .hero { min-height:0; padding-top:calc(10px + min(env(safe-area-inset-top, 0px), 12px)); padding-bottom:26px; }
   .hero__status { margin-bottom:18px; }

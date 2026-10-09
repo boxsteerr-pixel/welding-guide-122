@@ -9,7 +9,7 @@
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/style.css?v=8">
   <link rel="stylesheet" href="./css/home-link.css?v=5">
-  <link rel="stylesheet" href="./css/mobile-header.css?v=1">
+  <link rel="stylesheet" href="./css/mobile-header.css?v=2">
   <title>设备操作工快速处置手册</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
       <a class="home-return" href="../welding-guide-home/" aria-label="返回HOMEPAGE统一入口" title="返回HOMEPAGE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h5v-7h4v7h5V9"/></svg></a>
       <div class="hero__status">
         <span id="machine-state">读取设备配置…</span>
-        <span id="network-status" role="status">在线</span>
+        <span class="hero__status-right"><span id="network-status" role="status">在线</span><time id="currentTime" aria-label="设备本地系统时间">--:--</time></span>
       </div>
       <p class="eyebrow">现场快速处置</p>
       <h1><span id="machine-name">设备手册</span><small id="manual-title">操作工快速处置手册</small></h1>
@@ -116,6 +116,7 @@
   <template id="empty-template">
     <div class="empty-state"><span aria-hidden="true">＋</span><h3>内容待录入</h3><p>在 <code>data/manual.json</code> 中增加项目后，这里会自动显示。</p></div>
   </template>
+  <script src="./js/system-time.js?v=1" defer></script>
   <script src="./js/update-state.js?v=2" defer></script>
   <script src="./js/app.js?v=8" defer></script>
 </body>
