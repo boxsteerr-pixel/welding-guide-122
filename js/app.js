@@ -245,12 +245,15 @@
   });
 
   window.addEventListener("popstate", function (event) {
+    if (event.state && event.state.image && imageContext) return openImage(imageContext.source, true);
     if (!document.querySelector("#image-modal").hidden) return closeImage(false);
     showSection((event.state && event.state.section) || sectionFromHash(), { fromHistory: true });
   });
 
   const modal = document.querySelector("#image-modal");
   const modalImage = document.querySelector("#modal-image");
+  let imageContext = null;
+  let imageHistoryClosing = false;
   let scale = 1;
   let offsetX = 0;
   let offsetY = 0;
@@ -263,22 +266,37 @@
 
   function resetImage() { scale = 1; offsetX = 0; offsetY = 0; applyImageTransform(); }
 
-  function openImage(source) {
+  function openImage(source, fromHistory) {
+    imageContext = { source: source, x: window.scrollX, y: window.scrollY };
+    imageHistoryClosing = false;
     modalImage.src = source.currentSrc || source.src;
     modalImage.alt = source.alt;
     modal.hidden = false;
     document.body.classList.add("modal-open");
     resetImage();
-    history.pushState({ image: true }, "", location.href);
-    document.querySelector(".image-modal__close").focus();
+    if (!fromHistory) history.pushState({ image: true, section: state.section }, "", location.href);
+    document.querySelector(".image-modal__close").focus({ preventScroll: true });
   }
 
   function closeImage(useHistory) {
+    // Keep the dialog open until popstate, so returning from it never switches sections.
+    if (useHistory !== false && history.state && history.state.image) {
+      if (!imageHistoryClosing) { imageHistoryClosing = true; history.back(); }
+      return;
+    }
     modal.hidden = true;
     document.body.classList.remove("modal-open");
     modalImage.removeAttribute("src");
     resetImage();
-    if (useHistory !== false && history.state && history.state.image) history.back();
+    imageHistoryClosing = false;
+    if (imageContext) {
+      const position = imageContext;
+      if (position.source.isConnected) position.source.focus({ preventScroll: true });
+      window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+      window.requestAnimationFrame(function () {
+        if (modal.hidden) window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+      });
+    }
   }
 
   document.querySelector(".image-modal__close").addEventListener("click", function () { closeImage(); });
