@@ -1,46 +1,19 @@
 # welding-guide-122
 
-122激光焊机操作工快速处置手册的独立 PWA 项目。当前只包含空白内容框架，未复制101的任何具体故障内容或线上资源。
+122激光焊机操作工快速处置手册，版本1.0.0，收录三个附件手顺，共12个图示卡片。
 
-## 目录职责
+- 穿带异常故障报警处理：4个图示卡片，保留穿带注意事项及日常维护原文。
+- 间隙传感器显示位置偏移调整：6个图示卡片，按两张原图将原第3步分开展示。
+- 三个原始位出错不到位时退出自动步：两种可选方法分别展示，同一原图按对应区域查看。
 
-- `data/manual.json`：设备信息、版本与全部手册内容的主要维护入口。
-- `assets/images/`：本设备独立图片目录；建议保留能辨认设备细节的清晰度，不设500KB硬上限。
-- `css/style.css`、`js/app.js`：通用模板表现与交互，复制到其他设备时通常无需修改。
-- `manifest.json`、`service-worker.js`：本设备独立 PWA 配置和缓存边界。
+`data/manual.json`维护正文及标注；`assets/images/procedures/`保存附件内原始图片，未经重绘、压缩或重采样。`data/source-images.json`记录源文档、图片尺寸与SHA-256。页面只裁切显示区域，大图可切换全图，编号标注为独立覆盖层，原图像素保持不变。
 
-## 内容结构
+手机支持按钮缩放、双指缩放、拖动、全图/细节切换、标注开关和返回关闭。Service Worker v12预缓存全部11张原图。
 
-`faults`、`maintenance`、`safety` 均为项目数组。项目可使用以下字段：
-
-```json
-{
-  "id": "unique-item-id",
-  "title": "经审核的项目标题",
-  "risk": "high",
-  "keywords": ["关键词"],
-  "summary": "简短说明",
-  "checks": ["检查项"],
-  "stopConditions": ["必须停机并上报的条件"],
-  "steps": [
-    {
-      "title": "步骤标题",
-      "text": "经审核的操作说明",
-      "image": "./assets/images/example.jpg",
-      "alt": "图片中的设备部位说明"
-    }
-  ]
-}
-```
-
-正式内容必须经设备、安全与现场责任人审核。大图查看支持按钮缩放、双指缩放、拖动与浏览器返回关闭。
-
-## 本地检查
-
-必须通过 HTTP 服务打开，不能直接双击 `index.html`，否则浏览器会限制 JSON 读取和 Service Worker。
+## 检查
 
 ```powershell
 node tests/validate.mjs
 ```
 
-复制为后续设备模板时，至少修改：`data/manual.json` 的 `machine`、`manifest.json`、Service Worker 的 `CACHE_NAME/CACHE_PREFIX`、图标和 README。
+检查三个附件原文完整性、原图哈希、步骤与图片映射、标注边界和离线缓存清单。通过HTTP打开index.html，不要直接双击文件。

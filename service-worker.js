@@ -1,4 +1,4 @@
-const CACHE_NAME = "welding-guide-122-v11";
+const CACHE_NAME = "welding-guide-122-v12";
 const CACHE_PREFIX = "welding-guide-122-";
 const APP_ROOT = new URL("./", self.location.href);
 const CORE_ASSETS = [
@@ -8,12 +8,24 @@ const CORE_ASSETS = [
   "./index.html",
   "./css/home-link.css?v=5",
   "./css/style.css",
-  "./css/style.css?v=8",
+  "./css/style.css?v=12",
   "./js/app.js",
-  "./js/app.js?v=9",
+  "./js/app.js?v=12",
   "./js/update-state.js?v=2",
   "./data/manual.json",
   "./manifest.json",
+  "./assets/images/procedures/threading-1.jpeg",
+  "./assets/images/procedures/threading-2.jpeg",
+  "./assets/images/procedures/threading-3.jpeg",
+  "./assets/images/procedures/threading-4.jpeg",
+  "./assets/images/procedures/gap-1.jpeg",
+  "./assets/images/procedures/gap-2.png",
+  "./assets/images/procedures/gap-3.png",
+  "./assets/images/procedures/gap-4.png",
+  "./assets/images/procedures/gap-5.png",
+  "./assets/images/procedures/gap-6.png",
+  "./assets/images/procedures/home-1.jpeg",
+
   "./assets/icons/icon.svg",
   "./assets/icons/icon-192.png",
   "./assets/icons/icon-512.png"

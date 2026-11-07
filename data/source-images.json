@@ -1,0 +1,112 @@
+[
+  {
+    "sourceDocument": "122穿带异常故障报警处理手顺.docx",
+    "embeddedImage": "image1.jpeg",
+    "asset": "assets/images/procedures/threading-1.jpeg",
+    "sha256": "7a3c28dea4d466f8a7cd4070e4a17521ee409c9446239f16257b3dd5fa765f31",
+    "size": [
+      1280,
+      960
+    ]
+  },
+  {
+    "sourceDocument": "122穿带异常故障报警处理手顺.docx",
+    "embeddedImage": "image2.jpeg",
+    "asset": "assets/images/procedures/threading-2.jpeg",
+    "sha256": "7cbfc95265fda9778bc90703a66e46c91d480d923befc98f4c45e809a9fac89b",
+    "size": [
+      1154,
+      865
+    ]
+  },
+  {
+    "sourceDocument": "122穿带异常故障报警处理手顺.docx",
+    "embeddedImage": "image3.jpeg",
+    "asset": "assets/images/procedures/threading-3.jpeg",
+    "sha256": "ab3ea90a33cdc7a332042e5793c0393ffe9a927cd1b2486d9a1233d6e3fdefce",
+    "size": [
+      1154,
+      865
+    ]
+  },
+  {
+    "sourceDocument": "122穿带异常故障报警处理手顺.docx",
+    "embeddedImage": "image4.jpeg",
+    "asset": "assets/images/procedures/threading-4.jpeg",
+    "sha256": "a76d8422c2fca4287918c20aa790e0756c5f31eed291d36c03a752da435f422d",
+    "size": [
+      1280,
+      960
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image1.jpeg",
+    "asset": "assets/images/procedures/gap-1.jpeg",
+    "sha256": "59116a03371f9ae5b0ca8372751d264b2827dc1347735c548451d69c92b7e38b",
+    "size": [
+      1280,
+      960
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image2.png",
+    "asset": "assets/images/procedures/gap-2.png",
+    "sha256": "4782d232a5fa36cf8dfe291ed61b2b4cea4810e356c600e73952c5fcd5b2239d",
+    "size": [
+      1153,
+      533
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image3.png",
+    "asset": "assets/images/procedures/gap-3.png",
+    "sha256": "fdadb634f8b6b3be4f83263924d5f61fae9067408d2d311202ed1bfd145243ff",
+    "size": [
+      1153,
+      533
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image4.png",
+    "asset": "assets/images/procedures/gap-4.png",
+    "sha256": "371f56fe8ccd70894959527b02aac5e2a576b98316830ff7e7d7d2bf5fc1f254",
+    "size": [
+      1153,
+      533
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image5.png",
+    "asset": "assets/images/procedures/gap-5.png",
+    "sha256": "5fa756953d9e9d63744d5360c0ad271ff743d0152e53120faaac55279e9e5067",
+    "size": [
+      1152,
+      2493
+    ]
+  },
+  {
+    "sourceDocument": "C122间隙传感器显示位置偏移调整手顺.docx",
+    "embeddedImage": "image6.png",
+    "asset": "assets/images/procedures/gap-6.png",
+    "sha256": "bc95aa6c522f3410baeeb795bb887d6344e5be3a0fe70a96aed23c55a1f2c7c5",
+    "size": [
+      1152,
+      2493
+    ]
+  },
+  {
+    "sourceDocument": "焊机三个原始位出错不到位时退出自动步的方法.docx",
+    "embeddedImage": "image1.jpeg",
+    "asset": "assets/images/procedures/home-1.jpeg",
+    "sha256": "16173a768fcbdafc93f492a6bda0f5ee7a53d78ad661122065c023ff8875301e",
+    "size": [
+      2331,
+      1865
+    ]
+  }
+]

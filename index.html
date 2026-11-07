@@ -7,7 +7,7 @@
   <meta name="description" content="独立设备操作工快速处置手册">
   <link rel="manifest" href="./manifest.json">
   <link rel="icon" href="./assets/icons/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./css/style.css?v=8">
+  <link rel="stylesheet" href="./css/style.css?v=12">
   <link rel="stylesheet" href="./css/home-link.css?v=5">
   <link rel="stylesheet" href="./css/mobile-header.css?v=2">
   <title>设备操作工快速处置手册</title>
@@ -105,12 +105,14 @@
   <div id="image-modal" class="image-modal" role="dialog" aria-modal="true" aria-label="图片大图查看" hidden>
     <div class="image-modal__toolbar">
       <button type="button" data-zoom="out" aria-label="缩小图片">−</button>
-      <button type="button" data-zoom="reset" aria-label="恢复图片大小">1:1</button>
+      <button type="button" data-zoom="reset" aria-label="恢复图片大小">复位</button>
       <button type="button" data-zoom="in" aria-label="放大图片">＋</button>
     </div>
     <button type="button" class="image-modal__close" aria-label="关闭大图">×</button>
-    <img id="modal-image" alt="">
-    <p>双指缩放 · 拖动查看 · 点击关闭</p>
+    <div class="image-modal__heading"><strong id="image-caption"></strong><span id="image-legend"></span></div>
+    <div class="image-modal__viewport"><div id="modal-frame"></div></div>
+    <div class="image-modal__options"><button id="image-view-toggle" type="button">看全图</button><button id="image-markers-toggle" type="button" aria-pressed="true">标注</button><output id="zoom-level">100%</output></div>
+    <p>双指缩放 · 放大后拖动 · 返回关闭</p>
   </div>
 
   <template id="empty-template">
@@ -118,6 +120,6 @@
   </template>
   <script src="./js/system-time.js?v=1" defer></script>
   <script src="./js/update-state.js?v=2" defer></script>
-  <script src="./js/app.js?v=9" defer></script>
+  <script src="./js/app.js?v=12" defer></script>
 </body>
 </html>

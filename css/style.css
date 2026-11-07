@@ -219,3 +219,32 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:3px s
 .fault-row strong { display:block; color:#163a60; font-size:17px; }
 .fault-row small { display:block; color:#70869d; font-size:13px; }
 .fault-row > em { color:#4f6d88; font-size:32px; font-style:normal; }
+/* One source image per step; crop only the view, never resample source pixels. */
+.step-card > strong { display:block; color:#123f65; font-size:18px; line-height:1.5; }
+.step-card > p { white-space:pre-line; font-size:17px; line-height:1.85; margin:10px 0 14px; overflow-wrap:anywhere; }
+.step-image-button { display:block; width:100%; margin:0; padding:0; overflow:hidden; border:1px solid #cbdbe8; border-radius:9px; background:#e9eff4; cursor:zoom-in; }
+.procedure-visual { position:relative; width:100%; overflow:hidden; isolation:isolate; background:#e9eff4; }
+.step-card .procedure-visual img, .image-modal .procedure-visual img { position:absolute; display:block; height:auto; max-width:none; max-height:none; object-fit:initial; margin:0; border:0; border-radius:0; user-select:none; pointer-events:none; transform:none; }
+.figure-marker { position:absolute; border:2px solid #ffde45; border-radius:4px; box-shadow:0 0 0 1px #142b45,0 0 0 3px #0004; pointer-events:none; }
+.figure-marker b { position:absolute; top:0; left:0; display:grid; place-items:center; width:24px; height:24px; transform:translate(-35%,-65%); border:1px solid #142b45; border-radius:50%; color:#142b45; background:#ffde45; font:800 14px/1 system-ui; }
+.marker-legend { list-style:none; display:grid; gap:8px; margin:12px 0 0; padding:0; }
+.marker-legend li { display:flex; align-items:center; gap:9px; margin:0; color:#1a4667; font-size:16px; line-height:1.5; }
+.marker-legend b { display:grid; place-items:center; flex:0 0 25px; height:25px; border-radius:50%; color:#142b45; background:#ffde45; font-size:14px; }
+.image-hint { font-size:13px; padding-top:4px; }
+.procedure-note { margin-top:16px; padding:12px 14px; border-left:4px solid #d97824; border-radius:6px; background:#fff6e9; }
+.procedure-note h4 { margin:0 0 6px; }
+.procedure-note p { margin:0; font-size:17px; line-height:1.85; }
+.image-modal { padding:0; gap:0; justify-content:flex-start; background:#071524; }
+.image-modal__heading { flex:0 0 auto; width:100%; padding:calc(74px + env(safe-area-inset-top)) 18px 10px; text-align:center; pointer-events:none; }
+.image-modal__heading strong { display:block; font-size:17px; line-height:1.5; }
+.image-modal__heading span { display:block; margin-top:5px; font-size:14px; color:#ffde70; line-height:1.6; }
+.image-modal__viewport { flex:1; width:100%; min-height:0; display:flex; align-items:center; justify-content:center; overflow:hidden; touch-action:none; }
+#modal-frame { flex:none; will-change:transform; transform-origin:center; touch-action:none; }
+.image-modal__options { z-index:92; flex:0 0 auto; display:flex; align-items:center; justify-content:center; gap:12px; padding:10px 14px 40px; background:#071524; }
+.image-modal__options button { min-height:44px; min-width:76px; border:1px solid #ffffff66; border-radius:8px; color:white; background:#ffffff16; font-size:15px; }
+.image-modal__options output { min-width:50px; font-variant-numeric:tabular-nums; }
+.hide-markers .figure-marker { display:none; }
+.image-modal__toolbar button[data-zoom="reset"] { padding:0 13px; }
+.image-modal p { bottom:calc(8px + env(safe-area-inset-bottom)); }
+.image-modal__options { padding-bottom:calc(40px + env(safe-area-inset-bottom)); }
+@media (max-width:380px) { .entry-body { padding:10px; } .step-card { padding:10px; } }

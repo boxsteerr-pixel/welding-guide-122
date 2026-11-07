@@ -53,6 +53,7 @@
   function buildEntry(item) {
     const details = document.createElement("details");
     details.className = "manual-entry";
+    details.id = `procedure-${item.id}`;
     details.dataset.risk = item.risk || "medium";
     const summary = document.createElement("summary");
     const risk = document.createElement("span");
@@ -64,7 +65,7 @@
 
     const body = document.createElement("div");
     body.className = "entry-body";
-    body.append(risk);
+    if (item.risk) body.append(risk);
     if (item.summary) {
       const paragraph = document.createElement("p");
       paragraph.append(text(item.summary));
@@ -75,30 +76,47 @@
 
     if (Array.isArray(item.steps) && item.steps.length) {
       const heading = document.createElement("h4");
-      heading.append(text("处置步骤"));
+      heading.append(text(item.presentation === "alternatives" ? "退出方法（两种方法可选）" : "处置步骤"));
       body.append(heading);
       item.steps.forEach(function (step, index) {
         const card = document.createElement("div");
         card.className = "step-card";
         const strong = document.createElement("strong");
-        strong.append(text(`步骤 ${index + 1} · ${step.title || "操作"}`));
+        strong.append(text(`${step.label || `步骤 ${index + 1}`} · ${step.title || "操作"}`));
         const paragraph = document.createElement("p");
         paragraph.append(text(step.text || ""));
         card.append(strong, paragraph);
         if (step.image) {
-          const image = document.createElement("img");
-          image.src = step.image;
-          image.alt = step.alt || step.title || item.title || "操作步骤图片";
-          image.loading = "lazy";
-          image.addEventListener("click", function () { openImage(image); });
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "step-image-button";
+          button.setAttribute("aria-label", `放大：${step.title}`);
+          button.append(buildVisual(step, false));
+          button.addEventListener("click", function () { openImage(button, step); });
           const hint = document.createElement("span");
           hint.className = "image-hint";
-          hint.append(text("点击查看大图"));
-          card.append(image, hint);
+          hint.append(text("点图放大 · 双指缩放 · 拖动查看"));
+          card.append(button, hint);
+          if (step.markers && step.markers.length) {
+            const legend = document.createElement("ol");
+            legend.className = "marker-legend";
+            step.markers.forEach(function (marker, i) {
+              const li = document.createElement("li");
+              const badge = document.createElement("b"); badge.append(text(i + 1));
+              li.append(badge, text(marker.label)); legend.append(li);
+            });
+            card.append(legend);
+          }
         }
         body.append(card);
       });
     }
+    (item.notes || []).forEach(function (note) {
+      const box = document.createElement("aside"); box.className = "procedure-note";
+      const h = document.createElement("h4"); h.append(text(note.title));
+      const p = document.createElement("p"); p.append(text(note.text));
+      box.append(h, p); body.append(box);
+    });
     details.append(summary, body);
     return details;
   }
@@ -245,96 +263,143 @@
   });
 
   window.addEventListener("popstate", function (event) {
-    if (event.state && event.state.image && imageContext) return openImage(imageContext.source, true);
+    if (event.state && event.state.image && imageContext) return openImage(imageContext.source, imageContext.step, true);
     if (!document.querySelector("#image-modal").hidden) return closeImage(false);
     showSection((event.state && event.state.section) || sectionFromHash(), { fromHistory: true });
   });
 
-  const modal = document.querySelector("#image-modal");
-  const modalImage = document.querySelector("#modal-image");
-  let imageContext = null;
-  let imageHistoryClosing = false;
-  let scale = 1;
-  let offsetX = 0;
-  let offsetY = 0;
-  let dragStart = null;
-  let pinchStart = null;
-
-  function applyImageTransform() {
-    modalImage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+  function buildVisual(step, full) {
+    const visual = document.createElement("div"); visual.className = "procedure-visual";
+    const size = step.imageSize;
+    const crop = full ? [0, 0, size[0], size[1]] : step.crop || [0, 0, size[0], size[1]];
+    visual.style.aspectRatio = `${crop[2]} / ${crop[3]}`;
+    const img = document.createElement("img");
+    img.src = step.image; img.alt = step.alt; img.loading = "lazy"; img.draggable = false;
+    img.width = size[0]; img.height = size[1];
+    img.style.cssText = `width:${size[0] / crop[2] * 100}%;left:${-crop[0] / crop[2] * 100}%;top:${-crop[1] / crop[3] * 100}%;`;
+    visual.append(img);
+    (step.markers || []).forEach(function (marker, i) {
+      const r = marker.rect;
+      const box = document.createElement("span"); box.className = "figure-marker";
+      box.setAttribute("aria-hidden", "true");
+      box.style.cssText = `left:${(r[0]-crop[0])/crop[2]*100}%;top:${(r[1]-crop[1])/crop[3]*100}%;width:${r[2]/crop[2]*100}%;height:${r[3]/crop[3]*100}%;`;
+      const badge = document.createElement("b"); badge.append(text(i + 1)); box.append(badge); visual.append(box);
+    });
+    return visual;
   }
 
-  function resetImage() { scale = 1; offsetX = 0; offsetY = 0; applyImageTransform(); }
+  const modal = document.querySelector("#image-modal");
+  const modalFrame = document.querySelector("#modal-frame");
+  const modalViewport = document.querySelector(".image-modal__viewport");
+  let imageContext = null;
+  let imageHistoryClosing = false;
+  let scale = 1, offsetX = 0, offsetY = 0;
+  let fullImage = false;
+  const pointers = new Map();
+  let gesture = null;
+  let pointerStartedOnImage = false;
 
-  function openImage(source, fromHistory) {
-    imageContext = { source: source, x: window.scrollX, y: window.scrollY };
-    imageHistoryClosing = false;
-    modalImage.src = source.currentSrc || source.src;
-    modalImage.alt = source.alt;
-    modal.hidden = false;
-    document.body.classList.add("modal-open");
-    resetImage();
+  function applyImageTransform() {
+    modalFrame.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    setText("#zoom-level", `${Math.round(scale * 100)}%`);
+  }
+  function resetImage() { scale = 1; offsetX = 0; offsetY = 0; pointers.clear(); gesture = null; applyImageTransform(); }
+  function fitFrame() {
+    if (!imageContext || modal.hidden) return;
+    const s = imageContext.step;
+    const c = fullImage ? [0, 0, ...s.imageSize] : s.crop;
+    const width = Math.min(modalViewport.clientWidth - 24, (modalViewport.clientHeight - 20) * c[2] / c[3]);
+    modalFrame.style.width = `${width}px`;
+  }
+  function refreshModalVisual() {
+    modalFrame.replaceChildren(buildVisual(imageContext.step, fullImage));
+    const img = modalFrame.querySelector("img"); img.id = "modal-image"; img.loading = "eager";
+    document.querySelector("#image-view-toggle").textContent = fullImage ? "看细节" : "看全图";
+    fitFrame(); resetImage();
+  }
+  function openImage(source, step, fromHistory) {
+    if (!fromHistory) imageContext = { source, step, x: window.scrollX, y: window.scrollY };
+    imageHistoryClosing = false; fullImage = false;
+    modal.hidden = false; document.body.classList.add("modal-open");
+    setText("#image-caption", imageContext.step.title);
+    setText("#image-legend", (imageContext.step.markers || []).map((m, i) => `${i + 1} ${m.label}`).join("　·　"));
+    refreshModalVisual();
     if (!fromHistory) history.pushState({ image: true, section: state.section }, "", location.href);
     document.querySelector(".image-modal__close").focus({ preventScroll: true });
   }
-
   function closeImage(useHistory) {
-    // Keep the dialog open until popstate, so returning from it never switches sections.
     if (useHistory !== false && history.state && history.state.image) {
-      if (!imageHistoryClosing) { imageHistoryClosing = true; history.back(); }
-      return;
+      if (!imageHistoryClosing) { imageHistoryClosing = true; history.back(); } return;
     }
-    modal.hidden = true;
-    document.body.classList.remove("modal-open");
-    modalImage.removeAttribute("src");
-    resetImage();
-    imageHistoryClosing = false;
+    modal.hidden = true; document.body.classList.remove("modal-open"); modalFrame.replaceChildren();
+    resetImage(); imageHistoryClosing = false;
     if (imageContext) {
       const position = imageContext;
       if (position.source.isConnected) position.source.focus({ preventScroll: true });
-      window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
-      window.requestAnimationFrame(function () {
-        if (modal.hidden) window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
-      });
+      const restore = () => window.scrollTo({ left: position.x, top: position.y, behavior: "instant" });
+      restore(); window.requestAnimationFrame(function () { if (modal.hidden) restore(); });
     }
   }
-
-  document.querySelector(".image-modal__close").addEventListener("click", function () { closeImage(); });
-  modal.addEventListener("click", function (event) { if (event.target === modal) closeImage(); });
+  document.querySelector(".image-modal__close").addEventListener("click", () => closeImage());
+  document.querySelector("#image-view-toggle").addEventListener("click", () => { fullImage = !fullImage; refreshModalVisual(); });
+  const annotationButton = document.querySelector("#image-markers-toggle");
+  annotationButton.addEventListener("click", () => {
+    const hidden = modalFrame.classList.toggle("hide-markers");
+    annotationButton.setAttribute("aria-pressed", String(!hidden));
+  });
+  modal.addEventListener("click", function (event) { if (event.target === modalViewport && !pointerStartedOnImage) closeImage(); });
   modal.querySelectorAll("[data-zoom]").forEach(function (button) {
     button.addEventListener("click", function () {
       if (button.dataset.zoom === "reset") return resetImage();
-      scale = Math.min(4, Math.max(1, scale + (button.dataset.zoom === "in" ? .4 : -.4)));
-      if (scale === 1) { offsetX = 0; offsetY = 0; }
+      scale = Math.min(6, Math.max(1, scale + (button.dataset.zoom === "in" ? .5 : -.5)));
+      if (scale === 1) offsetX = offsetY = 0;
       applyImageTransform();
     });
   });
-  modalImage.addEventListener("pointerdown", function (event) {
-    if (scale <= 1) return;
-    modalImage.setPointerCapture(event.pointerId);
-    dragStart = { x: event.clientX - offsetX, y: event.clientY - offsetY };
+  function startGesture() {
+    const p = Array.from(pointers.values());
+    if (p.length === 2) {
+      const cx = (p[0].x+p[1].x)/2, cy = (p[0].y+p[1].y)/2;
+      const bounds = modalViewport.getBoundingClientRect();
+      gesture = { distance: Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y), scale,
+        x: offsetX, y: offsetY, cx, cy, centerX: bounds.x+bounds.width/2, centerY: bounds.y+bounds.height/2 };
+    } else if (p.length === 1) gesture = { px:p[0].x, py:p[0].y, x:offsetX, y:offsetY };
+    else gesture = null;
+  }
+  modalViewport.addEventListener("pointerdown", function (e) {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    pointerStartedOnImage = Boolean(e.target.closest("#modal-frame"));
+    if (!pointerStartedOnImage) return;
+    e.preventDefault(); modalViewport.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, {x:e.clientX,y:e.clientY}); startGesture();
   });
-  modalImage.addEventListener("pointermove", function (event) {
-    if (!dragStart) return;
-    offsetX = event.clientX - dragStart.x;
-    offsetY = event.clientY - dragStart.y;
+  modalViewport.addEventListener("pointermove", function (e) {
+    if (!pointers.has(e.pointerId) || !gesture) return;
+    pointers.set(e.pointerId, {x:e.clientX,y:e.clientY});
+    const p = Array.from(pointers.values());
+    if (p.length === 2 && gesture.distance) {
+      const g=gesture, cx=(p[0].x+p[1].x)/2, cy=(p[0].y+p[1].y)/2;
+      scale = Math.min(6, Math.max(1, g.scale * Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y) / g.distance));
+      offsetX=cx-g.centerX-(g.cx-g.centerX-g.x)*scale/g.scale;
+      offsetY=cy-g.centerY-(g.cy-g.centerY-g.y)*scale/g.scale;
+    } else if (p.length === 1 && scale > 1) {
+      offsetX=gesture.x+p[0].x-gesture.px; offsetY=gesture.y+p[0].y-gesture.py;
+    }
+    if (scale === 1) offsetX = offsetY = 0;
     applyImageTransform();
   });
-  modalImage.addEventListener("pointerup", function () { dragStart = null; });
-  modalImage.addEventListener("touchstart", function (event) {
-    if (event.touches.length === 2) {
-      pinchStart = Math.hypot(event.touches[0].clientX - event.touches[1].clientX, event.touches[0].clientY - event.touches[1].clientY) / scale;
+  function endPointer(e) { pointers.delete(e.pointerId); startGesture(); }
+  ["pointerup","pointercancel","lostpointercapture"].forEach(type => modalViewport.addEventListener(type,endPointer));
+  window.addEventListener("resize", () => { fitFrame(); resetImage(); });
+  window.addEventListener("keydown", function (event) {
+    if (modal.hidden) return;
+    if (event.key === "Escape") closeImage();
+    if (event.key === "Tab") {
+      const buttons = Array.from(modal.querySelectorAll("button"));
+      const next = (buttons.indexOf(document.activeElement)+(event.shiftKey ? -1 : 1)+buttons.length)%buttons.length;
+      event.preventDefault(); buttons[next].focus();
     }
-  }, { passive: true });
-  modalImage.addEventListener("touchmove", function (event) {
-    if (event.touches.length === 2 && pinchStart) {
-      const distance = Math.hypot(event.touches[0].clientX - event.touches[1].clientX, event.touches[0].clientY - event.touches[1].clientY);
-      scale = Math.min(4, Math.max(1, distance / pinchStart));
-      applyImageTransform();
-    }
-  }, { passive: true });
-  modalImage.addEventListener("touchend", function () { pinchStart = null; }, { passive: true });
-  window.addEventListener("keydown", function (event) { if (event.key === "Escape" && !modal.hidden) closeImage(); });
+  });
 
   function updateNetworkStatus() {
     const node = document.querySelector("#network-status");
