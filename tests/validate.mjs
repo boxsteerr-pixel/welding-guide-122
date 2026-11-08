@@ -32,10 +32,12 @@ assert.equal(imageSources.length, 11);
 for (const entry of imageSources) {
   const bytes = await readFile(path.join(root, entry.asset));
   assert.equal(createHash("sha256").update(bytes).digest("hex"), entry.sha256, `原图发生变化：${entry.asset}`);
-  assert.ok(sw.includes(`./${entry.asset}`), `离线缓存缺图：${entry.asset}`);
+  const optimized = entry.asset.replace(/\.(png|jpe?g)$/i, '.webp');
+  assert.ok((await readFile(path.join(root, optimized))).length > 0, optimized);
+  assert.ok(sw.includes(`./${optimized}`), `离线缓存缺图：${optimized}`);
 }
 for (const f of manual.faults) for (const step of f.steps) {
-  assert.ok(imageSources.some(s => `./${s.asset}` === step.image));
+  assert.ok(imageSources.some(s => `./${s.asset.replace(/\.(png|jpe?g)$/i, '.webp')}` === step.image));
   const [w,h] = step.imageSize, [x,y,cw,ch] = step.crop;
   assert.ok(x >= 0 && y >= 0 && cw > 0 && ch > 0 && x + cw <= w && y + ch <= h);
   for (const m of step.markers || []) {
@@ -47,7 +49,7 @@ assert.deepEqual(manual.maintenance, []);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-122-v12"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-122-v13"/);
 assert.match(html, /id="currentTime"/);
 assert.match(html, /system-time\.js\?v=1/);
 assert.match(sw, /system-time\.js\?v=1/);

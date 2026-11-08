@@ -27,7 +27,7 @@
         {
           "title": "报警画面",
           "text": "1.报警画面如下：",
-          "image": "./assets/images/procedures/threading-1.jpeg",
+          "image": "./assets/images/procedures/threading-1.webp",
           "alt": "报警画面",
           "imageSize": [
             1280,
@@ -44,7 +44,7 @@
         {
           "title": "入口侧到原位置及带钢前进返回",
           "text": "①出现报警编号‘10441：入口没有带钢’时\n操作人员应至现场操作面板，点击‘入口侧到原位置’按键，进行入口侧到原始位手动操作。\n当入口侧到原始位之后，再操作‘开卷机前进返回旋钮’，将带钢点到夹钳内合适位置，再尝试进行后续自动焊接。",
-          "image": "./assets/images/procedures/threading-2.jpeg",
+          "image": "./assets/images/procedures/threading-2.webp",
           "alt": "入口侧到原位置及带钢前进返回",
           "imageSize": [
             1154,
@@ -89,7 +89,7 @@
         {
           "title": "设备功能选择",
           "text": "②若点击‘入口侧到原位置’按键后出现报警编号‘20329：入口摄像头对中在点动模式’，此时切换到总界面，点击最左侧的‘设备功能选择’。",
-          "image": "./assets/images/procedures/threading-3.jpeg",
+          "image": "./assets/images/procedures/threading-3.webp",
           "alt": "设备功能选择",
           "imageSize": [
             1154,
@@ -116,7 +116,7 @@
         {
           "title": "入口侧对中装置切换回自动",
           "text": "此时第一行‘入口侧对中装置’会显示点动模式，我们只需要点按几次，将其切换回自动即可正常操作。",
-          "image": "./assets/images/procedures/threading-4.jpeg",
+          "image": "./assets/images/procedures/threading-4.webp",
           "alt": "入口侧对中装置切换回自动",
           "imageSize": [
             1280,
@@ -169,7 +169,7 @@
         {
           "title": "观察QCDS画面",
           "text": "1.观察QCDS画面发现间隙图像上方绿条与拼缝处不在同一直线上（一般是由于调整完带钢横向补偿之后，间隙传感器与拼缝的相对位置发生了变化导致的）",
-          "image": "./assets/images/procedures/gap-1.jpeg",
+          "image": "./assets/images/procedures/gap-1.webp",
           "alt": "观察QCDS画面",
           "imageSize": [
             1280,
@@ -196,7 +196,7 @@
         {
           "title": "获取修改权限",
           "text": "2.此时需要调整间隙传感器的左右位置。首先需要获取修改权限。点击操作，点击运行权限，点击调试员。输入密码：999",
-          "image": "./assets/images/procedures/gap-2.png",
+          "image": "./assets/images/procedures/gap-2.webp",
           "alt": "获取修改权限",
           "imageSize": [
             1153,
@@ -241,7 +241,7 @@
         {
           "title": "配置 → 间隙传感器",
           "text": "3.开始将间隙传感器左右调整。点击配置，点击间隙传感器。",
-          "image": "./assets/images/procedures/gap-3.png",
+          "image": "./assets/images/procedures/gap-3.webp",
           "alt": "配置 → 间隙传感器",
           "imageSize": [
             1153,
@@ -277,7 +277,7 @@
         {
           "title": "原图像 → 参数设置",
           "text": "再点击原图像，再点击参数设置。",
-          "image": "./assets/images/procedures/gap-4.png",
+          "image": "./assets/images/procedures/gap-4.webp",
           "alt": "原图像 → 参数设置",
           "imageSize": [
             1153,
@@ -313,7 +313,7 @@
         {
           "title": "修改-203-X Offset的值",
           "text": "4.修改-203-X Offset的值。（修改逻辑为若绿条偏拼缝右边多，则+此值，例如将230改为234；反之亦然）",
-          "image": "./assets/images/procedures/gap-5.png",
+          "image": "./assets/images/procedures/gap-5.webp",
           "alt": "修改-203-X Offset的值",
           "imageSize": [
             1152,
@@ -340,7 +340,7 @@
         {
           "title": "保存配置",
           "text": "5.点击系统，点击保存配置。（调整后不是立即看到调整效果，而是等到下一根焊接时显示的间隙图像来判断调整是否合理。）",
-          "image": "./assets/images/procedures/gap-6.png",
+          "image": "./assets/images/procedures/gap-6.webp",
           "alt": "保存配置",
           "imageSize": [
             1152,
@@ -395,7 +395,7 @@
         {
           "title": "按下操作面板上的手动按钮",
           "text": "第一种方法！！！ 按下操作面板上的手动按钮（不是画面上的，是面板上的）",
-          "image": "./assets/images/procedures/home-1.jpeg",
+          "image": "./assets/images/procedures/home-1.webp",
           "alt": "按下操作面板上的手动按钮",
           "imageSize": [
             2331,
@@ -423,7 +423,7 @@
         {
           "title": "钥匙开关打到锁定模式再解锁",
           "text": "第二种方法！！！  钥匙开关打到锁定模式再解锁。",
-          "image": "./assets/images/procedures/home-1.jpeg",
+          "image": "./assets/images/procedures/home-1.webp",
           "alt": "钥匙开关打到锁定模式再解锁",
           "imageSize": [
             2331,

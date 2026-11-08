@@ -1,4 +1,4 @@
-const CACHE_NAME = "welding-guide-122-v12";
+const CACHE_NAME = "welding-guide-122-v13";
 const CACHE_PREFIX = "welding-guide-122-";
 const APP_ROOT = new URL("./", self.location.href);
 const CORE_ASSETS = [
@@ -14,17 +14,17 @@ const CORE_ASSETS = [
   "./js/update-state.js?v=2",
   "./data/manual.json",
   "./manifest.json",
-  "./assets/images/procedures/threading-1.jpeg",
-  "./assets/images/procedures/threading-2.jpeg",
-  "./assets/images/procedures/threading-3.jpeg",
-  "./assets/images/procedures/threading-4.jpeg",
-  "./assets/images/procedures/gap-1.jpeg",
-  "./assets/images/procedures/gap-2.png",
-  "./assets/images/procedures/gap-3.png",
-  "./assets/images/procedures/gap-4.png",
-  "./assets/images/procedures/gap-5.png",
-  "./assets/images/procedures/gap-6.png",
-  "./assets/images/procedures/home-1.jpeg",
+  "./assets/images/procedures/threading-1.webp",
+  "./assets/images/procedures/threading-2.webp",
+  "./assets/images/procedures/threading-3.webp",
+  "./assets/images/procedures/threading-4.webp",
+  "./assets/images/procedures/gap-1.webp",
+  "./assets/images/procedures/gap-2.webp",
+  "./assets/images/procedures/gap-3.webp",
+  "./assets/images/procedures/gap-4.webp",
+  "./assets/images/procedures/gap-5.webp",
+  "./assets/images/procedures/gap-6.webp",
+  "./assets/images/procedures/home-1.webp",
 
   "./assets/icons/icon.svg",
   "./assets/icons/icon-192.png",
