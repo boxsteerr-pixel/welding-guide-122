@@ -59,6 +59,7 @@
           "markers": [
             {
               "label": "入口侧到原位置",
+              "badgeAbove": true,
               "rect": [
                 803,
                 443,

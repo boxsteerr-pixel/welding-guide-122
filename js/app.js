@@ -281,6 +281,7 @@
     (step.markers || []).forEach(function (marker, i) {
       const r = marker.rect;
       const box = document.createElement("span"); box.className = "figure-marker";
+      if (marker.badgeAbove) box.classList.add("figure-marker--badge-above");
       box.setAttribute("aria-hidden", "true");
       box.style.cssText = `left:${(r[0]-crop[0])/crop[2]*100}%;top:${(r[1]-crop[1])/crop[3]*100}%;width:${r[2]/crop[2]*100}%;height:${r[3]/crop[3]*100}%;`;
       const badge = document.createElement("b"); badge.append(text(i + 1)); box.append(badge); visual.append(box);

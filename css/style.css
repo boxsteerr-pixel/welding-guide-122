@@ -227,6 +227,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline:3px s
 .step-card .procedure-visual img, .image-modal .procedure-visual img { position:absolute; display:block; height:auto; max-width:none; max-height:none; object-fit:initial; margin:0; border:0; border-radius:0; user-select:none; pointer-events:none; transform:none; }
 .figure-marker { position:absolute; border:2px solid #ffde45; border-radius:4px; box-shadow:0 0 0 1px #142b45,0 0 0 3px #0004; pointer-events:none; }
 .figure-marker b { position:absolute; top:0; left:0; display:grid; place-items:center; width:24px; height:24px; transform:translate(-35%,-65%); border:1px solid #142b45; border-radius:50%; color:#142b45; background:#ffde45; font:800 14px/1 system-ui; }
+.figure-marker--badge-above b { top:auto; bottom:100%; left:0; margin-bottom:3px; transform:none; }
 .marker-legend { list-style:none; display:grid; gap:8px; margin:12px 0 0; padding:0; }
 .marker-legend li { display:flex; align-items:center; gap:9px; margin:0; color:#1a4667; font-size:16px; line-height:1.5; }
 .marker-legend b { display:grid; place-items:center; flex:0 0 25px; height:25px; border-radius:50%; color:#142b45; background:#ffde45; font-size:14px; }

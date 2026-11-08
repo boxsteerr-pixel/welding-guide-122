@@ -49,7 +49,7 @@ assert.deepEqual(manual.maintenance, []);
 assert.deepEqual(manual.safety, []);
 assert.equal(manifest.start_url, "./");
 assert.equal(manifest.scope, "./");
-assert.match(sw, /const CACHE_NAME = "welding-guide-122-v13"/);
+assert.match(sw, /const CACHE_NAME = "welding-guide-122-v14"/);
 assert.match(html, /id="currentTime"/);
 assert.match(html, /system-time\.js\?v=1/);
 assert.match(sw, /system-time\.js\?v=1/);
