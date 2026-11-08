@@ -257,6 +257,7 @@
           "markers": [
             {
               "label": "配置",
+              "badgeSide": "left",
               "rect": [
                 250,
                 58,
@@ -266,6 +267,7 @@
             },
             {
               "label": "间隙传感器",
+              "badgeSide": "right",
               "rect": [
                 266,
                 73,
@@ -293,6 +295,7 @@
           "markers": [
             {
               "label": "原图像",
+              "badgeSide": "left",
               "rect": [
                 366,
                 149,
@@ -302,6 +305,7 @@
             },
             {
               "label": "参数设置",
+              "badgeSide": "right",
               "rect": [
                 369,
                 231,
@@ -356,6 +360,7 @@
           "markers": [
             {
               "label": "系统",
+              "angle": -7,
               "rect": [
                 204,
                 807,
@@ -365,6 +370,7 @@
             },
             {
               "label": "保存配置",
+              "angle": -7,
               "rect": [
                 217,
                 856,
